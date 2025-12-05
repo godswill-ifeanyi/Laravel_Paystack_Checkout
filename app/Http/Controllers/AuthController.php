@@ -60,6 +60,19 @@ class AuthController extends Controller
 
         Auth::login($user);
 
+        if (Auth::user()->role === "admin") {
+            return redirect()->route('admin.index')->with('success', 'Welcome Back '.$user->name);
+        }
+
         return redirect()->route('user.index')->with('success', 'Welcome Back '.$user->name);
+    }
+
+    public function logout(Request $request) {
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login-page')->with('success', 'Logout successfully');
     }
 }

@@ -9,4 +9,12 @@ class UserController extends Controller
     public function index() {
         return view('user.index');
     }
+
+    public function products() {
+        return view('user.products');
+    }
+
+    public function profile() {
+        return view('user.profile');
+    }
 }
