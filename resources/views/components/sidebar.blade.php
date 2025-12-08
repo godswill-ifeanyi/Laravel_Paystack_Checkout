@@ -3,7 +3,7 @@
 
     <nav class="space-y-4">
       <button onclick="window.location.href='{{ route('user.index') }}'" class="w-full text-left px-4 py-2 rounded-lg {{ request()->is('user/index') ? 'bg-blue-600 text-white' : '' }}">Home</button>
-      <button onclick="window.location.href='{{ route('products.index') }}'" class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 {{ request()->is('user/products') ? 'bg-blue-600 text-white' : '' }}">Products</button>
+      <button onclick="window.location.href='{{ route('user.products') }}'" class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 {{ request()->is('user/products') ? 'bg-blue-600 text-white' : '' }}">Products</button>
       <button onclick="window.location.href='{{ route('profile.index') }}'" class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 {{ request()->is('user/profile') ? 'bg-blue-600 text-white' : '' }}">Profile</button>
 
       <hr class="my-4">

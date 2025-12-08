@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Dashboard</title>
+  <title>Responsive Dashboard</title>
 
   <!-- Alertify CSS -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
@@ -11,7 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 min-h-screen flex">
+<body class="bg-gray-100">
 
   @if (session('success'))
     <script>
@@ -31,15 +31,24 @@
 
     @endif
 
-  <!-- Sidebar -->
-  <x-sidebar />
+  <!-- MOBILE TOP NAV -->
+  <div class="lg:hidden flex items-center justify-between bg-white p-4 shadow">
+    <h1 class="text-xl font-bold">Dashboard</h1>
+    <button onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" 
+            class="text-gray-700 text-2xl">&#9776;</button>
+  </div>
 
-  <!-- Main Content -->
-  <main class="ml-64 p-8 w-full">
-    @yield('content')
-  </main>
+  <div class="flex">
 
-  <!-- Simple Script to Show Pages (No Logic, Just UI Switching) -->
+    <!-- SIDEBAR -->
+    <x-admin.sidebar />
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 p-6 lg:ml-64">
+        @yield('content')
+    </div>
+  </div>
+
   {{-- <script>
     function showPage(page) {
       document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));

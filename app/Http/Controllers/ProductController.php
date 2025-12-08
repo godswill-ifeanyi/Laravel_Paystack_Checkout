@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
@@ -11,7 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+        return view('admin.products');
     }
 
     /**
@@ -19,15 +21,26 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.products.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['image'] = null;
+
+        if ($request->hasFile('image')) {
+            $image_name = time().'.'.$request->image->extension();$request->image->move(public_path('images'), $image_name);
+            $validated['image'] = $image_name;
+        }
+
+        Product::create($validated);
+
+        return redirect()->back()->with('success', 'Product added successfully');
     }
 
     /**
