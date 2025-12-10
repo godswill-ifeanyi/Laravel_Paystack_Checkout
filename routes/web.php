@@ -22,6 +22,7 @@ Route::prefix('/user')->middleware(['auth'])->group(function() {
     Route::get('/index', [UserController::class, 'index'])->name('user.index');
 
     Route::get('/products', [UserController::class, 'products'])->name('user.products');
+    Route::post('/products/pay', [UserController::class, 'pay'])->name('products.pay');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('profile.index');
 

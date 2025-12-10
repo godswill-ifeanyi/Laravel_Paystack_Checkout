@@ -13,7 +13,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.products');
+        $products = Product::latest()->get();
+
+        return view('admin.products')->with('products', $products);
     }
 
     /**
@@ -56,7 +58,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('admin.products.edit')->with('product', $product);
     }
 
     /**
@@ -64,7 +68,27 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:2000',
+            'price' => 'required|numeric',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+
+        if ($request->hasFile('image')) {
+            $image_name = time().'.'.$request->image->extension();$request->image->move(public_path('images'), $image_name);
+            $product->image = $image_name;
+        }
+
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -72,6 +96,10 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
     }
 }
