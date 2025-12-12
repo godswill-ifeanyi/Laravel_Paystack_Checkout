@@ -12,6 +12,7 @@
                 @csrf
 
                 <input type="hidden" name="price" value="{{ $product->price }}">
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
 
                 <div class="bg-white p-5 rounded-xl shadow">
                     <img src="{{ asset('images/'.$product->image) }}" class="rounded-lg mb-4">

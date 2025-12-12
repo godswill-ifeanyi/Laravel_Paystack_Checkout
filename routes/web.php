@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,7 +24,11 @@ Route::prefix('/user')->middleware(['auth'])->group(function() {
     Route::get('/index', [UserController::class, 'index'])->name('user.index');
 
     Route::get('/products', [UserController::class, 'products'])->name('user.products');
-    Route::post('/products/pay', [UserController::class, 'pay'])->name('products.pay');
+
+    Route::post('/products/pay', [CheckoutController::class, 'pay'])->name('products.pay');
+    Route::get('/payment/callback', [CheckoutController::class, 'handle_callback']);
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('user.orders');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('profile.index');
 
